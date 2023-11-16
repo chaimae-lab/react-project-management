@@ -154,3 +154,15 @@ body {
 
 
 
+
+.login-box form p {
+
+  color: #03e9f4;
+}
+
+
+.login-box form h5{
+  color:red;
+ margin: top 0;
+ font-size: 12px;
+}
