@@ -1,5 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+
 
 export default function Header() {
   return (
@@ -24,34 +26,29 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="https://web.whatsapp.com/">
+              <Link className="nav-link active" aria-current="page" to="/register">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="https://web.whatsapp.com/">
+              <a   className="nav-link" href="https://web.whatsapp.com/">
                 Profile
-              </a>
+                </a>
             </li>
           </ul>
           <div className="d-flex w-100 justify-content-end">
-            <button
-              type="button"
-              id="login_btn"
-              className="btn btn-secondary mx-3"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
-              data-bs-whatever="@mdo"
-            >
+          <Link to="/login">
+          <button type="button" id="login_btn" className="btn btn-secondary mx-3">
               Login
             </button>
-            <button
-              type="button"
-              id="register_btn"
-              className="btn btn-secondary"
-            >
-              Register
-            </button>
+           </Link>
+           
+            <Link to="/register">
+            <button type="button" id="register_btn" className="btn btn-secondary">
+              Register  </button>
+                </Link>
+           
+          
             <button
               type="button"
               id="logout"
