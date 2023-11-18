@@ -1,5 +1,6 @@
 import React , { useState }  from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 export default function Login() {
  
 /*useState definit l value de champs de  formulaire , ex :au debut(name est vide ) 
@@ -87,8 +88,7 @@ function Submit(e){
 
   return (
     <div  className="login-box">
-      <form  style={{ height: '460px' }} onSubmit={Submit}>
-      <h2> Form</h2>
+      <form  onSubmit={Submit}>
       
     <div className="user-box">
 <input id="email" type="email" placeholder="email" name=""  value={email} onChange={(e)=>setEmail( e.target.value)} required/>   
@@ -103,8 +103,10 @@ function Submit(e){
 </div>
 
 
-<button  style={{ marginTop: '185px' }} type="submit"> Register </button>
-
+<button  type="submit"> Register </button>
+<p className='account'>Don't have an account
+<Link to="/register">Sign-up </Link>
+</p>
 
 
       </form>

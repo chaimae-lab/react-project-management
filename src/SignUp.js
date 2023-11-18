@@ -6,15 +6,12 @@ export default function SignUp() {
 /*useState definit l value de champs de  formulaire , ex :au debut(name est vide ) 
    et apres l'ecriture(setName)permet de modifier le valeur de name*/
 
-const [name, setName] = useState('')
+
 const [email, setEmail] = useState('')
 const  [password, setPassword] = useState('')
-const [ repeatPassword, setRepeat] = useState('')
 
-//etat qui realise des condition si el est true ,une fois que je clique enregister sa valeur change au true 
-const [ accept, setAccept ]= useState(false)
 // Nouvel état pour vérifier si l'email existe
-const [emailExists, setEmailExists] = useState(false); 
+const [emailExists, setEmailExists] = useState(false);
 
 
 
@@ -40,8 +37,6 @@ function Submit(e){
 
     e.preventDefault() ;
 
-    //une fois je clique enregistrer accept=true , alors realiser les  condition
-    setAccept(true);
 
     //api 
 
@@ -52,9 +47,8 @@ function Submit(e){
 
        // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
   if (
-    name !== '' &&
+   
     password.length < 8 &&
-    password === repeatPassword&&
     !emailExists
     
      ) {
@@ -62,7 +56,7 @@ function Submit(e){
 
       axios.post('https://jsonplaceholder.typicode.com/users' ,{
 
-      name:name,
+      
       email:email,
       username:password,
      
@@ -91,12 +85,6 @@ function Submit(e){
   return (
     <div  className="login-box">
       <form onSubmit={Submit}>
-      <h2> Form</h2>
-      <div className="user-box">   
-<input id="name" type="text" placeholder="name" name=""  value={name} onChange={(e)=>setName( e.target.value)} />    
-{name==='' &&accept &&<h5 className ="error" style={{ color: 'red' }}>name is required</h5>}
-<br/>
-    </div>
       
     <div className="user-box">
 <input id="email" type="email" placeholder="email" name=""  value={email} onChange={(e)=>setEmail( e.target.value)} required/>   
@@ -110,12 +98,7 @@ function Submit(e){
 <br/>
 </div>
 
-<div className="user-box">
-<input id="repeat" type="password" placeholder="RepeatPassword" name="" value={repeatPassword} onChange={(e)=>setRepeat( e.target.value)}  />   
-{repeatPassword.length >8 && <h5 className ="error" >Le mot de passe doit contenir  moins de 8 caractères.</h5>}
-{password !== repeatPassword && accept  && <h5 className ="error">Les mots de passe ne correspondent pas</h5>}
-<br/>
-</div>
+
 
 <button style={{ marginBottom: '10px' }} type="submit"> Register </button>
 
