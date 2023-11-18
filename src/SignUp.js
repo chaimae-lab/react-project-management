@@ -23,18 +23,13 @@ const [emailExists, setEmailExists] = useState(false);
 //checkEmailExists function pour verifier si l'email deja exist 
 const checkEmailExists = async () => {
   try {
-    const response = await axios.post(`https://jsonplaceholder.typicode.com/users?email=${email}`
-    );
-       
-    setEmailExists(response.data.exists);
-    console.log("email exist")
+    const response = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${email}`);
+    setEmailExists(response.data.length > 0); 
+    console.log("get tous les emails");
   } catch (error) {
-    console.error('Erreur lors de la vérification de l\'existence de l\'email:', error);
+    console.error('problem:', error);
   }
 };
-
-
-
 
 
 
@@ -53,12 +48,15 @@ function Submit(e){
         // Vérifier l'existence de l'e-mail avant d'appeler l'API
      checkEmailExists();
 
+  
+
        // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
   if (
     name !== '' &&
     password.length < 8 &&
     password === repeatPassword&&
-    emailExists
+    !emailExists
+    
      ) {
 
 
@@ -102,7 +100,7 @@ function Submit(e){
       
     <div className="user-box">
 <input id="email" type="email" placeholder="email" name=""  value={email} onChange={(e)=>setEmail( e.target.value)} required/>   
-{accept && emailExists &&<h5>email alredey ben taken </h5>} 
+
 <br/>
 </div>
 

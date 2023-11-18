@@ -1,15 +1,17 @@
 
 import './App.css';
 import SignUp from './SignUp';
-
+import Header from './component/Header';
 
 function App() {
   return (
     <div className="App">
       
-      <SignUp/>
-
-        
+     
+      <Header />
+      <SignUp />
+     
+     
     </div>
   );
 }
