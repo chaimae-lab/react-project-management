@@ -1,7 +1,7 @@
 import React , { useState }  from 'react'
 import axios from 'axios';
-export default function SignUp() {
 
+export default function SignUp() {
 
 /*useState definit l value de champs de  formulaire , ex :au debut(name est vide ) 
    et apres l'ecriture(setName)permet de modifier le valeur de name*/
@@ -10,19 +10,17 @@ export default function SignUp() {
 const [email, setEmail] = useState('')
 const  [password, setPassword] = useState('')
 
-// Nouvel état pour vérifier si l'email existe
-const [emailExists, setEmailExists] = useState(false);
+const [emailExists, setEmailExists] = useState(false); 
 
 
 
-
-
-//checkEmailExists function pour verifier si l'email deja exist 
 const checkEmailExists = async () => {
   try {
-    const response = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${email}`);
+    const response = await axios.get(`'https://reqres.in/api/login?email=${email}`);
     setEmailExists(response.data.length > 0); 
     console.log("get tous les emails");
+  
+  
   } catch (error) {
     console.error('problem:', error);
   }
@@ -38,41 +36,42 @@ function Submit(e){
     e.preventDefault() ;
 
 
-    //api 
 
-        // Vérifier l'existence de l'e-mail avant d'appeler l'API
-     checkEmailExists();
+  
+    checkEmailExists();
 
   
 
-       // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
-  if (
-   
-    password.length < 8 &&
-    !emailExists
-    
-     ) {
+    // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
+if (
+
+ password.length < 8 &&
+ !emailExists
+ 
+  ) {
 
 
-      axios.post('https://jsonplaceholder.typicode.com/users' ,{
+   axios.post('https://reqres.in/api/login' ,{
 
+   email:email,
+   password:password,
+  
+    })
+   .then(function (response) {
+      console.log(response);
+      console.log("compte creer");
+    })
+    .catch(function (error) {
+      console.log(error);
+      console.log(error);
       
-      email:email,
-      username:password,
-     
-       })
-      .then(function (response) {
-         console.log(response);
-       })
-       .catch(function (error) {
-         console.log(error);
-       });
-     
-}else {
-  console.log("error")
-}
+    });
   
-    
+}else {
+console.log("email deja existe")
+}
+
+ 
     
       
       
@@ -85,7 +84,7 @@ function Submit(e){
   return (
     <div  className="login-box">
       <form onSubmit={Submit}>
-      
+      <h4>Create a new account</h4>
     <div className="user-box">
 <input id="email" type="email" placeholder="email" name=""  value={email} onChange={(e)=>setEmail( e.target.value)} required/>   
 

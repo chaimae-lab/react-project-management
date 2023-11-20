@@ -1,6 +1,9 @@
 import React , { useState }  from 'react'
 import axios from 'axios';
+
+ 
 import { Link } from 'react-router-dom';
+
 export default function Login() {
  
 /*useState definit l value de champs de  formulaire , ex :au debut(name est vide ) 
@@ -11,84 +14,83 @@ const [email, setEmail] = useState('')
 const  [password, setPassword] = useState('')
 
 
-//etat qui realise des condition si el est true ,une fois que je clique enregister sa valeur change au true 
-const [ accept, setAccept ]= useState(false)
-// Nouvel état pour vérifier si l'email existe
-const [emailExists, setEmailExists] = useState(false); 
 
 
 
-
-
-//checkEmailExists function pour verifier si l'email deja exist 
-const checkEmailExists = async () => {
-  try {
-    const response = await axios.get(`https://jsonplaceholder.typicode.com/users?email=${email}`);
-    setEmailExists(response.data.length > 0); 
-    console.log("get tous les emails");
-  } catch (error) {
-    console.error('problem:', error);
-  }
-};
 
 
 
 //function submit ,enregister 
 
 
-function Submit(e){
+function  handleSubmit(e){
 
     e.preventDefault() ;
 
-    //une fois je clique enregistrer accept=true , alors realiser les  condition
-    setAccept(true);
+    
 
     //api 
 
-        // Vérifier l'existence de l'e-mail avant d'appeler l'API
-     checkEmailExists();
-
-  
-
        // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
-  if (
- 
-    password.length < 8 &&
-    !emailExists
-    
-     ) {
+       
+       // Ajouter une condition  obligatoire pour déclencher l'appel à l'API
+if (
 
+  password.length < 8 
 
-      axios.post('https://jsonplaceholder.typicode.com/users' ,{
-
-      email:email,
-      username:password,
-     
-       })
-      .then(function (response) {
-         console.log(response);
-       })
-       .catch(function (error) {
-         console.log(error);
-       });
-     
-}else {
-  console.log("error")
-}
   
+   ) {
+ 
+ 
+    axios.post('https://reqres.in/api/login' ,{
+ 
+    email:email,
+    password:password,
+   
+     })
+    .then(function (response) { 
+       let token = response.data.token;
+        //on stocke token in local storage
+        localStorage.setItem("token" ,token)
+        //use state 
+      
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data.token);
+        //aller au page home 
+        window.location.pathname="/user"
+       
+     })
+     .catch(function (error) {
+       console.log(error);
+       console.log("email ou password n'existe pas ");
+       alert("Email or password does not exist")
+     });
+   
+ }else {
+ console.log("error")
+ }
+ 
+  
+          
     
-    
+    }
+      
+  
+
+     
+
       
       
       
     
-}
+
 
 
 
   return (
     <div  className="login-box">
-      <form  onSubmit={Submit}>
+      <form  onSubmit={ handleSubmit}>
       
     <div className="user-box">
 <input id="email" type="email" placeholder="email" name=""  value={email} onChange={(e)=>setEmail( e.target.value)} required/>   
@@ -102,10 +104,10 @@ function Submit(e){
 <br/>
 </div>
 
-
 <button  type="submit"> Register </button>
+
 <p className='account'>Don't have an account
-<Link to="/register">Sign-up </Link>
+<Link to="/header">Sign-up </Link>
 </p>
 
 
