@@ -54,39 +54,27 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
          
          <ul className="navbar-nav">
- 
+                
+
          {isAuthenticated && (
-                <>
+          <>
             <li className="nav-item">
 
               <Link className="nav-link active" aria-current="page" to="/register">
-                Home
+                user
               </Link>
             </li>
             <li className="nav-item">
               <a   className="nav-link" href="https://web.whatsapp.com/">
                 Profile
                 </a>
-            </li>
-
-            <li className="nav-item">
-                    
-                <Link   to="/login">
-                <button  onClick={handleLogout}
-              type="button"
-              id="logout"
-              className="btn btn-danger mx-3" >Logou </button></Link>  
-                  </li>
-                </>
-              )}
+            </li> </>)}
+                         
             </ul>
-           
-         
-           
-
+          
                 <div className="d-flex w-100 justify-content-end">
-                {!isAuthenticated ? (
-                <>
+                {!isAuthenticated && (
+          <>
            <Link to="/login">
           <button type="button" id="login_btn" className="btn btn-secondary mx-3">
               Login
@@ -96,14 +84,18 @@ export default function Header() {
             <Link to="/register">
             <button type="button" id="register_btn" className="btn btn-secondary">
               Register  </button>
-                </Link>
-           
-                </>
-              ) : null}
+                </Link></>)}
+                {isAuthenticated && (
+                     <>
+                <Link   to="/login">
+                <button  onClick={handleLogout}
+              type="button"
+              id="logout"
+              className="btn btn-danger mx-3" >Logou </button></Link> </>)}
                 </div>
+
+                
            
-            
-         
         </div>
       </div>
     </nav>
