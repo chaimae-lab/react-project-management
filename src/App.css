@@ -1,3 +1,6 @@
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+
+
 .App {
   text-align: center;
 }
@@ -150,6 +153,14 @@ body {
 
   padding: 30px;
 
+}
+
+
+/*/*  user  */
+
+table{
+background-color:rgb(245, 238, 238) ;
+margin-top: 50px;
 }
 
 

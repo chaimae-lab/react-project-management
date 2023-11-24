@@ -91,7 +91,7 @@ export default function Header() {
                 <button  onClick={handleLogout}
               type="button"
               id="logout"
-              className="btn btn-danger mx-3" >Logou </button></Link> </>)}
+              className="btn btn-danger mx-3" >Logout </button></Link> </>)}
                 </div>
 
                 
