@@ -3,8 +3,10 @@
 
 .App {
   text-align: center;
-}
+  background: linear-gradient(to right, pink,rgb(216, 68, 93));
 
+
+}
 
 
 
@@ -31,6 +33,7 @@
 /*/*  signUp */
 
 
+
 html {
   height: 100%;
 }
@@ -38,8 +41,9 @@ body {
   margin:0;
   padding:0;
   font-family: sans-serif;
-  background: linear-gradient(rgb(195, 0, 255),red );
+  background: linear-gradient(to right, pink,rgb(216, 68, 93));
 }
+
 
 .login-box {
   position: absolute;
@@ -52,6 +56,7 @@ body {
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
+  
 }
 
 .login-box h2 {

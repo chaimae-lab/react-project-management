@@ -12,7 +12,7 @@ function App() {
   
         <Router>
         <Header/>
-        
+       
         <Routes>
       
           <Route path="/register" element={<SignUp />} />
