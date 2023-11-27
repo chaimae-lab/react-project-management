@@ -41,6 +41,51 @@ const handleClose = () => {
 
 
 
+
+
+///////// //get users 
+   
+useEffect( ()=>{
+
+  fetch('https://jsonplaceholder.typicode.com/users')
+  //ktjib response 3la chkl object json 
+.then(response => response.json())
+   //j'ai donne le nom (data) au response 
+.then(data=> { console.log(data)
+            //maintenant array users contient la valeur de data  
+            //item object backend 
+                                          //pour appeler use effect si la valeur runUseEffect change de 0
+               setUsers(data)})  } ,       [runUseEffect])
+
+
+
+               
+
+               
+               
+//////////delete user 
+
+async function  deleteUser(id){
+      /*on utilise async , try pour ne pa passer au ligne 2 sauf si ligne 1 est execute */
+  try{  
+const res = await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+   //je change la valeur de runUseeffect si l'utilisateur est supprimer de base de donnes
+    if (res.status===200) {
+         setRun((prev)=>prev+1);
+         console.log(`L'utilisateur avec l'ID ${id} a été supprimé.`);
+    
+    }
+
+    }catch{
+         console.log("error")
+     }
+
+}
+              
+
+
+
+
 //////////edit ,, update
 
    ////edit
@@ -100,43 +145,6 @@ const handleUpdate = () => {
 
 
 
-
-///////// //get users 
-   
-useEffect( ()=>{
-
-  fetch('https://jsonplaceholder.typicode.com/users')
-  //ktjib response 3la chkl object json 
-.then(response => response.json())
-   //j'ai donne le nom (data) au response 
-.then(data=> { console.log(data)
-            //maintenant array users contient la valeur de data  
-            //item object backend 
-                                          //pour appeler use effect si la valeur runUseEffect change de 0
-               setUsers(data)})  } ,       [runUseEffect])
-
-
-               
-               
-//////////delete user 
-
-async function  deleteUser(id){
-      /*on utilise async , try pour ne pa passer au ligne 2 sauf si ligne 1 est execute */
-  try{  
-const res = await axios.put('http://localhost:3000/user/${id}');
-   //je change la valeur de runUseeffect si l'utilisateur est supprimer de base de donnes
-    if (res.status===200) {
-         setRun((prev)=>prev+1);
-    
-    }
-
-    }catch{
-         console.log("error")
-     }
-
-}
-              
-
                
 /////////  create user 
 
@@ -186,7 +194,7 @@ const handleSave = () => {
 
     <div className='d-flex justify-content-start'>
         <button onClick={handleShow} type='button' className='btn btn-light'>
-          Ajouter
+          Add new user
         </button>
       </div>
 
@@ -265,11 +273,11 @@ const handleSave = () => {
         <Modal.Footer>
           {/* Bouton pour fermer le modal */}
           <Button variant="secondary" onClick={handleClose}>
-            Fermer
+            close
           </Button>
           {/* Bouton pour ajouter */}
           <Button variant="secondary" onClick={handleSave}>
-            Enregistrer 
+            save
           </Button>
         </Modal.Footer>
       </Modal>
@@ -313,11 +321,11 @@ const handleSave = () => {
         <Modal.Footer>
           {/* Bouton pour fermer le modal */}
           <Button variant="secondary" onClick={handleClose}>
-            Fermer
+            close
           </Button>
           {/* Bouton pour ajouter */}
           <Button variant="secondary" onClick={handleUpdate}>
-            Enregistrer 
+            save
           </Button>
         </Modal.Footer>
       </Modal>

@@ -52,13 +52,15 @@ if (
        let token = response.data.token;
         //on stocke token in local storage
         localStorage.setItem("token" ,token)
-        //use state 
-      
+        //use state  
+       setEmail('');
+       setPassword('');
         console.log(response);
         console.log(response.data);
         console.log(response.data.token);
         //aller au page home 
         window.location.pathname="/user"
+       
        
      })
      .catch(function (error) {
