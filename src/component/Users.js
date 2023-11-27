@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
 import { Modal, Button ,Form} from 'react-bootstrap';
 
 
@@ -12,9 +11,12 @@ export default function Users() {
   const [email, setEmail] = useState('')
   const  [name, setName] = useState('')
 
-// Utilisation de l'état local pour gérer l'affichage du modal
+// Utilisation de l'état local pour gérer l'affichage du modal d'ajout et de modification
   const [show, setShow] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   
+  //use state pour modal update  selectedUserId est null ,kn3tiwh item.id
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
 //array vide users mni kndiro setUser kn7oto fih data de backend 
   const [users ,setUsers]  =       useState([]);
@@ -28,11 +30,73 @@ sa valeur change lorsque je clique sur button delele*/
   
 
 
-// Fonction pour afficher le modal
+// Fonction pour afficher le modal d'ajout
 const handleShow = () => setShow(true);
 
-// Fonction pour fermer le modal
-const handleClose = () => setShow(false);
+// Fonction pour fermer le modal d'ajout
+const handleClose = () => {
+          setShow(false);
+          setShowUpdateModal(false);
+};
+
+
+
+//////////edit ,, update
+
+   ////edit
+
+// get one user (findById),pour afficher data dans form update
+const fetchUserDataById = (userId) => {
+  axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    .then((response) => {
+      const userData = response.data;
+      // Pré-remplir les champs du formulaire avec les données de l'utilisateur de base de donnes
+      setName(userData.name);
+      setEmail(userData.email);
+    
+     
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la récupération des données de l\'utilisateur :', error);
+    });
+};
+
+
+
+// Fonction pour afficher le modal de modification de user par id
+const handleShowUpdateModal = (userId) => {
+  setSelectedUserId(userId);
+  console.log(userId)
+
+  fetchUserDataById(userId);
+  setShowUpdateModal(true);
+};
+
+
+
+            //////update
+
+const handleUpdate = () => {
+  axios.put(`https://jsonplaceholder.typicode.com/users/${selectedUserId}`, {
+    name,
+    email,
+  })
+  .then((response) => {
+    console.log('Utilisateur mis à jour :', response.data);
+    // Fermer la modal après la mise à jour
+    setShowUpdateModal(false);
+    // Réinitialiser les champs du formulaire
+    setName('');
+    setEmail('');
+    // Forcer le rechargement des utilisateurs en modifiant runUseEffect
+    setRun((prev) => prev + 1);
+  })
+  .catch((error) => {
+    console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
+  });
+};
+
+          
 
 
 
@@ -149,7 +213,7 @@ const handleSave = () => {
    
       <td>        
           
-      <Link to={`/${item.id}`}> <i className="bi bi-pencil"></i>  </Link>
+      <i onClick={() => handleShowUpdateModal(item.id)}  className="bi bi-pencil"></i> 
            
            <i  onClick={()=>deleteUser(item.id)} className="bi bi-trash"> </i>        
                       
@@ -175,7 +239,7 @@ const handleSave = () => {
         <Modal.Body>
       
         <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -185,7 +249,7 @@ const handleSave = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formBasicName">
+            <Form.Group controlId="formName">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -210,6 +274,53 @@ const handleSave = () => {
         </Modal.Footer>
       </Modal>
    
+
+
+
+
+
+
+   
+      {/* Modal */}
+      <Modal show={showUpdateModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+      
+        <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+
+
+        </Modal.Body>
+        <Modal.Footer>
+          {/* Bouton pour fermer le modal */}
+          <Button variant="secondary" onClick={handleClose}>
+            Fermer
+          </Button>
+          {/* Bouton pour ajouter */}
+          <Button variant="secondary" onClick={handleUpdate}>
+            Enregistrer 
+          </Button>
+        </Modal.Footer>
+      </Modal>
 </div>
 
 
